@@ -70,6 +70,7 @@ export default class Controller {
   backToMainMenu() {
     this.clean();
     this.stop();
+    document.body.style.height = "90vh";
     document.body.style.overflow = 'scroll';
     this.mainMenu();
   }
@@ -108,9 +109,7 @@ export default class Controller {
     let containerInteraction = document.createElement("div");
     for (let i = 0; i < 2; i++) {
       let btn = this.addButton(this.charactersNames[i+3], "", this.selectionMenu[i]);
-      btn.style.width = "400px";
-      btn.style.height = "70px";
-      
+      btn.style.width = document.body.clientWidth +"px";
       containerInteraction.appendChild(btn);
     }
     document.body.appendChild(containerInteraction);
@@ -169,6 +168,7 @@ export default class Controller {
     document.body.appendChild(this.view.canvas);
     if(this.model.nbPlayers == 2)
       document.body.appendChild(this.view.canvas2);
+    document.body.style.height = "100vh";
     document.body.style.overflow = 'hidden';
     this.start();
   }

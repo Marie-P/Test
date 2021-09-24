@@ -1,16 +1,16 @@
-/* body {
+body {
   position: relative;
-  overflow: hidden;
+  overflow: auto;
   margin: 0px;
   padding: 0px;
-  background: #333;
+  /* background: #333; */
   font-family: Arial, Helvetica, sans-serif;
   height: 100vh;
-  background-image: url("../assets/menu/background.jpg");
-  color: #ffffff;
+  /* background-image: url("../assets/menu/background.jpg"); */
+  /* color: #ffffff; */
   font-size: 30px;
 }
-
+/*
 canvas {
   border: 5px solid white;
 }

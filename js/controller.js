@@ -71,7 +71,7 @@ export default class Controller {
     this.clean();
     this.stop();
     document.body.style.height = "90vh";
-    document.body.style.overflow = 'scroll';
+    document.body.style.overflow = 'auto';
     this.mainMenu();
   }
 
@@ -109,7 +109,8 @@ export default class Controller {
     let containerInteraction = document.createElement("div");
     for (let i = 0; i < 2; i++) {
       let btn = this.addButton(this.charactersNames[i+3], "", this.selectionMenu[i]);
-      btn.style.width = document.body.clientWidth +"px";
+      btn.style.width = document.body.clientWidth <= 500 ? 
+        document.body.clientWidth - (30 * document.body.clientWidth)/100 +"px" : "400px";
       containerInteraction.appendChild(btn);
     }
     document.body.appendChild(containerInteraction);

@@ -168,7 +168,7 @@ export default class Controller {
     document.body.appendChild(this.view.canvas);
     if(this.model.nbPlayers == 2)
       document.body.appendChild(this.view.canvas2);
-    document.body.style.height = "100vh";
+    document.body.style.height = "100%";
     document.body.style.overflow = 'hidden';
     this.start();
   }

@@ -435,7 +435,6 @@ export default class Controller {
     if(event.touches[0].clientX >= this.model.backButtonX && event.touches[0].clientX <= this.model.backButtonWx + this.model.backButtonX && event.touches[0].clientY >= this.model.backButtonY && event.touches[0].clientY <= this.model.backButtonWy + this.model.backButtonY) {
       this.backToMainMenu();
     } 
-
     if (this.model.nbPlayers == 1) {
       // joystick
       if((event.touches[0].clientX <= this.view._centerX + 50 && event.touches[0].clientX >= this.view._centerX - 50) && (event.touches[0].clientY <= this.view._centerY + 50 && event.touches[0].clientY >= this.view._centerY - 50)) {

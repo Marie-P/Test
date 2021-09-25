@@ -433,6 +433,7 @@ export default class Controller {
   }
   touchstartFunction(event){
     if(event.touches[0].clientX >= this.model.backButtonX && event.touches[0].clientX <= this.model.backButtonWx + this.model.backButtonX && event.touches[0].clientY >= this.model.backButtonY && event.touches[0].clientY <= this.model.backButtonWy + this.model.backButtonY) {
+      this.model.backButtonColor = "#232323";
       this.backToMainMenu();
     } 
     if (this.model.nbPlayers == 1) {

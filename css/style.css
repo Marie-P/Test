@@ -53,9 +53,9 @@ background: #f1f1f1;
 color: #333;
 }
 
-button:focus{
+/* button:focus{
 background: antiquewhite;
-}
+} */
 
 .mainMenu {
 position: relative;
@@ -63,8 +63,4 @@ font-size: 50px;
 top: 25%;
 left: 25%;
 transform: translate(-50%, -50%);
-}
-
-.cantBeChosen:focus {
-background: red;
 }

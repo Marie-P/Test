@@ -9,6 +9,10 @@ export default class Controller {
     this.charactersNames = ["luffy", "pikachu", "naruto", "Valider.",  "Retour au menu principal."];
     this.charactersUrls = ["./assets/menu/luffy_choix.png", "./assets/menu/pikachu_choix.png", "./assets/menu/naruto_choix.png"];
     this.selectionMenu = [this.validate, this.backToMainMenu];
+
+    // Le bouton pour choisir de jouer avec le mode deux joueurs
+    this.btnTwoPlayers = null;
+
   }
 
   //////////////////////////////////////////////////////////////////////////////////////////////
@@ -25,10 +29,13 @@ export default class Controller {
     container.appendChild(welcomeText);  
     let sectionNames = ["1 Joueur", "2 Joueurs"], urls = ["", ""], sectionFunctions = [this.onePlayer, this.twoPlayers];
     for (let i = 0; i < 2; i++) {
-      let btn = this.addButton(sectionNames[i], urls[i], sectionFunctions[i]);
-      if (i == 1 && document.body.clientWidth <= 500) // Pour les petits écrans, l'utilisateur verra le bouton 2eme joueur apparaitre en rouge s'il est sélectionné
-        btn.className = "cantBeChosen";
-      container.appendChild(btn);
+      if (i == 1) { // Pour les petits écrans, l'utilisateur verra le bouton 2eme joueur apparaitre en rouge s'il est sélectionné
+        this.btnTwoPlayers = this.addButton(sectionNames[i], urls[i], sectionFunctions[i]);
+        container.appendChild(this.btnTwoPlayers);
+      } else {
+        let btn = this.addButton(sectionNames[i], urls[i], sectionFunctions[i]);
+        container.appendChild(btn);
+      }
     }
     document.body.appendChild(container);
   }
@@ -131,7 +138,7 @@ export default class Controller {
   /**
    * Méthode lancée s'il y a deux joueurs.
    */
-  twoPlayers() {
+  twoPlayers(btn) {
     if(document.body.clientWidth > 500) {
       this.clean();
       this.model.nbPlayers = 2;
@@ -141,7 +148,8 @@ export default class Controller {
       this.addCharactersButtons(textPlayer1, this.getCharacter1);
       this.addCharactersButtons(textPlayer2, this.getCharacter2);
       this.addSelectionButtons();
-    }
+    } else // Pour les petits écrans, l'utilisateur verra le bouton 2eme joueur apparaitre en rouge s'il est sélectionné
+      this.btnTwoPlayers.style.background = "red";
   }
 
   /**

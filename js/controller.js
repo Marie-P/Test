@@ -505,6 +505,10 @@ export default class Controller {
   }
 
   touchendFunction(event) {
+    if(event.clientX >= this.model.backButtonX && event.clientX <= this.model.backButtonWx + this.model.backButtonX && event.clientY >= this.model.backButtonY && event.clientY <= this.model.backButtonWy + this.model.backButtonY) {
+      this.backToMainMenu();
+    } 
+    
     if (this.model.nbPlayers == 1) {
       if (this.model.character1.move == "run") this.model.character1.stand();
       this.model.countBeforeRunning1 = 0;

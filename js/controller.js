@@ -25,7 +25,7 @@ export default class Controller {
    mainMenu() {
     let container = document.createElement("div"), welcomeText = document.createElement("p");
     container.className = "mainMenu";
-    welcomeText.innerHTML = "<br><br>Bienvenue hahaha sur Tresor Raid !<br><br>Choisissez une option : ";
+    welcomeText.innerHTML = "<br><br>Bienvenue sur Tresor Raid !<br><br>Choisissez une option : ";
     container.appendChild(welcomeText);  
     let sectionNames = ["1 Joueur", "2 Joueurs"], urls = ["", ""], sectionFunctions = [this.onePlayer, this.twoPlayers];
     for (let i = 0; i < 2; i++) {
@@ -433,8 +433,7 @@ export default class Controller {
   }
   touchstartFunction(event){
     if(event.touches[0].clientX >= this.model.backButtonX && event.touches[0].clientX <= this.model.backButtonWx + this.model.backButtonX && event.touches[0].clientY >= this.model.backButtonY && event.touches[0].clientY <= this.model.backButtonWy + this.model.backButtonY) {
-      // this.backToMainMenu();
-      this.model.character1.win();
+      this.backToMainMenu();
     } 
 
     if (this.model.nbPlayers == 1) {

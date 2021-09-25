@@ -17,9 +17,11 @@ export default class View {
       this.canvas2 = document.createElement("canvas");
       this.context2 = this.canvas2.getContext("2d");
       this.canvas2.width = window.innerWidth;
-      this.canvas2.height = 250;
+      // this.canvas2.height = 250;
+      this.canvas2.height = window.innerHeight/2;
+      console.log(this.canvas2.height)
       this.backgroundWidth2 = window.innerWidth;
-      this.backgroundHeight2 = 17;
+      this.backgroundHeight2 = window.innerHeight/15;
       this.camera2 = 0;
     }
 
@@ -48,9 +50,9 @@ export default class View {
 
   setView(nbPlayer) {
     document.body.clientWidth > 500 ? this.canvas.width = window.innerWidth : this.canvas.width = 500;
-    nbPlayer == 1 ? this.canvas.height = window.innerHeight : this.canvas.height = 250;
+    nbPlayer == 1 ? this.canvas.height = window.innerHeight : this.canvas.height = window.innerHeight/2;
     document.body.clientWidth > 500 ? this.backgroundWidth = window.innerWidth : this.backgroundWidth = 500;
-    nbPlayer == 1 ? this.backgroundHeight = window.innerHeight/15 : this.backgroundHeight = 17;
+    this.backgroundHeight = window.innerHeight/15;
   }
 
   /**

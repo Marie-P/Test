@@ -6,12 +6,16 @@ export default class Controller {
   constructor() {
     this.model = new Model();
     this.view = new View(this.model.nbPlayers);
-    this.charactersNames = ["luffy", "pikachu", "naruto", "Valider.",  "Retour au menu principal."];
+    this.charactersNames = ["luffy", "pikachu", "naruto", "Valider",  "Retour au menu principal"];
     this.charactersUrls = ["./assets/menu/luffy_choix.png", "./assets/menu/pikachu_choix.png", "./assets/menu/naruto_choix.png"];
     this.selectionMenu = [this.validate, this.backToMainMenu];
 
     // Le bouton pour choisir de jouer avec le mode deux joueurs
     this.btnTwoPlayers = null;
+
+    // Liste pour séparer le choix de l'utilisateur (pour différencier les couleurs)
+    this.btnsCharacter1 = [];
+    this.btnsCharacter2 = [];
 
   }
 
@@ -25,10 +29,10 @@ export default class Controller {
    mainMenu() {
     let container = document.createElement("div"), welcomeText = document.createElement("p");
     container.className = "mainMenu";
-    welcomeText.innerHTML = "<br><br>Bienvenue sur Tresor Raid !<br><br>Choisissez une option : ";
+    welcomeText.innerHTML = "<br><br><br><br>Bienvenue sur Tresor Raid !<br><br>Choisissez une option : ";
     container.appendChild(welcomeText);  
-    let sectionNames = ["1 Joueur", "2 Joueurs"], urls = ["", ""], sectionFunctions = [this.onePlayer, this.twoPlayers];
-    for (let i = 0; i < 2; i++) {
+    let sectionNames = ["1 Joueur", "2 Joueurs", "Règles du Jeu"], urls = ["", "", ""], sectionFunctions = [this.onePlayer, this.twoPlayers, this.rulesDescription];
+    for (let i = 0; i < 3; i++) {
       if (i == 1) { // Pour les petits écrans, l'utilisateur verra le bouton 2eme joueur apparaitre en rouge s'il est sélectionné
         this.btnTwoPlayers = this.addButton(sectionNames[i], urls[i], sectionFunctions[i]);
         container.appendChild(this.btnTwoPlayers);
@@ -57,7 +61,7 @@ export default class Controller {
       btn.appendChild(text);
     } 
     if(sectionFunction == this.getCharacter1 || sectionFunction == this.getCharacter2)
-      btn.addEventListener("click", sectionFunction.bind(this, text));
+      btn.addEventListener("click", sectionFunction.bind(this, text, btn));
     else
       btn.addEventListener("click", sectionFunction.bind(this));
     return btn;
@@ -86,24 +90,34 @@ export default class Controller {
    * Pour récupérer le personnage choisi par le premier joueur.
    * @param {TextNode} character : personnage choisi.
    */
-  getCharacter1(character) {
+  getCharacter1(character, btn) {
     this.model.choosenFirstCharacter = character.nodeValue;
+    this.btnsCharacter1.forEach(element => {
+      element.style.background = "transparent"
+    });
+    btn.style.background = "blue";
   }
 
   /**
    * Pour récupérer le personnage choisi par le deuxième joueur.
    * @param {TextNode} character : personnage choisi.
    */
-  getCharacter2(character) {
+  getCharacter2(character, btn) {
     this.model.choosenSecondCharacter = character.nodeValue;
+    this.btnsCharacter2.forEach(element => {
+      element.style.background = "transparent"
+    });
+    btn.style.background = "green";
   }
 
   // Les boutons pour sélectionner un personnage.
-  addCharactersButtons(selectionText, getFunction) {
+  addCharactersButtons(selectionText, getFunction, numberDivCharacter) {
+    numberDivCharacter == 1 ? this.btnsCharacter1 = [] : this.btnsCharacter2 = [];
     let container = document.createElement("div");
     container.appendChild(selectionText);    
     for (let i = 0; i < 3; i++) {
       let btn = this.addButton(this.charactersNames[i], this.charactersUrls[i], getFunction);
+      numberDivCharacter == 1 ? this.btnsCharacter1.push(btn) : this.btnsCharacter2.push(btn);
       container.appendChild(btn);
     }
     document.body.appendChild(container);
@@ -131,25 +145,43 @@ export default class Controller {
     this.model.nbPlayers = 1;
     let textPlayer1 = document.createElement("p");
     textPlayer1.innerHTML = "Joueur 1 : ";
-    this.addCharactersButtons(textPlayer1, this.getCharacter1);
+    this.addCharactersButtons(textPlayer1, this.getCharacter1, 1);
     this.addSelectionButtons();
   }
 
   /**
    * Méthode lancée s'il y a deux joueurs.
    */
-  twoPlayers(btn) {
+  twoPlayers() {
     if(document.body.clientWidth > 500) {
       this.clean();
       this.model.nbPlayers = 2;
       let textPlayer1 = document.createElement("p"), textPlayer2 = document.createElement("p");
       textPlayer1.innerHTML = "Joueur 1 : ";
       textPlayer2.innerHTML = "Joueur 2 : ";
-      this.addCharactersButtons(textPlayer1, this.getCharacter1);
-      this.addCharactersButtons(textPlayer2, this.getCharacter2);
+      this.addCharactersButtons(textPlayer1, this.getCharacter1, 1);
+      this.addCharactersButtons(textPlayer2, this.getCharacter2, 2);
       this.addSelectionButtons();
     } else // Pour les petits écrans, l'utilisateur verra le bouton 2eme joueur apparaitre en rouge s'il est sélectionné
       this.btnTwoPlayers.style.background = "red";
+  }
+
+  /**
+   * Méthode pour expliquer les règles du jeu.
+   */
+  rulesDescription() {
+    this.clean();
+    let rules = document.createElement("p");
+    rules.innerHTML ="<center>Règles du jeu :</center> <br>Le but du jeu est de récupérer le trésor qui se trouve à la fin de votre parcours.\
+    <br>Vous pouvez jouer seul sur ordinateur et utiliser les touches directionnelles de votre clavier.\
+    <br><br>Vous pouvez également jouer sur votre téléphone ou votre tablette. Dans ce cas, vous pouvez utiliser les touches directionnelles, ainsi que le joystick, se trouvant sur votre écran.\
+    <br><br>Lorsque vous jouez à 2 (ATTENTION : seulement possibles sur ordinateur), l’objectif est toujours de récupérer le trésor, mais cette fois avant votre adversaire.";
+    let backMenu = this.addButton("Retour au menu principal", "", this.backToMainMenu);
+    backMenu.style.width = document.body.clientWidth <= 500 ? 
+        document.body.clientWidth - (30 * document.body.clientWidth)/100 +"px" : "400px";
+    backMenu.style.display = "block";
+    document.body.appendChild(rules);
+    document.body.appendChild(backMenu);
   }
 
   /**

@@ -1,5 +1,5 @@
 export default class BackButton {
-  constructor(x, y) {
+  constructor(x, y, wx, wy) {
     
   }
 }

@@ -505,9 +505,10 @@ export default class Controller {
   }
 
   touchendFunction(event) {
-    // if(event.touches[0].clientX >= this.model.backButtonX && event.touches[0].clientX <= this.model.backButtonWx + this.model.backButtonX && event.touches[0].clientY >= this.model.backButtonY && event.touches[0].clientY <= this.model.backButtonWy + this.model.backButtonY) {
-    //   this.backToMainMenu();
-    // } 
+    if(event.touches[0].clientX >= this.model.backButtonX && event.touches[0].clientX <= this.model.backButtonWx + this.model.backButtonX && event.touches[0].clientY >= this.model.backButtonY && event.touches[0].clientY <= this.model.backButtonWy + this.model.backButtonY) {
+      // this.backToMainMenu();
+      this.model.character1.win();
+    } 
     
     if (this.model.nbPlayers == 1) {
       if (this.model.character1.move == "run") this.model.character1.stand();
